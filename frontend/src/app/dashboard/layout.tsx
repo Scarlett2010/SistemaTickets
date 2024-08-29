@@ -24,8 +24,8 @@ import Image from "next/image";
 import { Button } from "@/components/ui/button";
 
 const links = [
-  { name: "perfil", href: "perfil" },
-  { name: "tickets", href: "tickets" },
+  { name: "perfil", href: "/dashboard/tecnico/perfil" },
+  { name: "tickets", href: "/dashboard/tecnico/tickets" },
 ];
 
 export default function DashboardLayout({
@@ -39,7 +39,7 @@ export default function DashboardLayout({
         <div className="px-3 py-3 lg:px-5 lg:pl-3 ">
           <div className="flex items-center justify-between">
             <div className="flex items-center justify-start ">
-              <Sheet >
+              <Sheet>
                 <SheetTrigger asChild className="sm:hidden">
                   <Button variant="outline">
                     {
@@ -111,7 +111,7 @@ export default function DashboardLayout({
                       asChild
                       className="w-full text-base text-center capitalize bg-red-500 text-white font-normal rounded-lg mt-20  p-2  hover:bg-red-600"
                     >
-                      <Link href="login">cerrar sesion</Link>
+                      <Link href="/login">cerrar sesion</Link>
                     </SheetClose>
                   </SheetFooter>
                 </SheetContent>
@@ -156,12 +156,11 @@ export default function DashboardLayout({
                     </Avatar>
                   </MenubarTrigger>
                   <MenubarContent>
-                    {/* <MenubarSeparator /> */}
                     <MenubarItem
                       onClick={() => console.log("cerrar sesión")}
                       className="cursor-pointer text-red-400 focus:bg-red-500 focus:text-white"
                     >
-                      cerrar sesión
+                      {<Link href="/login">cerrar sesion</Link>}
                     </MenubarItem>
                   </MenubarContent>
                 </MenubarMenu>
