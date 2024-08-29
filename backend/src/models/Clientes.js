@@ -1,6 +1,10 @@
 import { Schema, model } from "mongoose";
 
-const tecnicoSchema = new Schema({
+const clienteSchema = new Schema({
+  cedula: {
+    type: Number,
+    required: true,
+  },
   nombre: {
     type: String,
     required: true,
@@ -9,20 +13,16 @@ const tecnicoSchema = new Schema({
     type: String,
     required: true,
   },
-  cedula: {
-    type: Number,
-    required: true,
-  },
-  fecha_nacimiento: {
-    type: Date,
-    required: true,
-  },
-  genero: {
+  ciudad: {
     type: String,
     required: true,
   },
-  ciudad: {
-    type: Number,
+  email: {
+    type: String,
+    required: true,
+  },
+  password: {
+    type: String,
     required: true,
   },
   direccion: {
@@ -33,11 +33,11 @@ const tecnicoSchema = new Schema({
     type: Number,
     required: true,
   },
-  email: {
-    type: String,
+  fecha_nacimiento: {
+    type: Date,
     required: true,
   },
-  password: {
+  dependencia: {
     type: String,
     required: true,
   },
@@ -53,19 +53,19 @@ const tecnicoSchema = new Schema({
   ],
 });
 
-tecnicoSchema.methods.encrypPassword = async function (password) {
+clienteSchema.methods.encrypPassword = async function (password) {
   const salt = await bcrypt.genSalt(10);
   const passwordEncryp = await bcrypt.hash(password, salt);
   return passwordEncryp;
 };
 
-tecnicoSchema.methods.matchPassword = async function (password) {
+clienteSchema.methods.matchPassword = async function (password) {
   const response = await bcrypt.compare(password, this.password);
   return response;
 };
-tecnicoSchema.methods.crearToken = function () {
+clienteSchema.methods.crearToken = function () {
   const tokenGenerado = (this.token = Math.random().toString(36).slice(2));
   return tokenGenerado;
 };
 
-export default model("Tecnico", tecnicoSchema);
+export default model("Cliente", clienteSchema);

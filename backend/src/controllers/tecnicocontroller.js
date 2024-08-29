@@ -1,4 +1,5 @@
 import Tecnico from "../models/Tecnico.js";
+import Ticket from "../models/Ticket.js";
 const login = async (req, res) => {
   const { email, password } = req.body;
 
@@ -63,9 +64,64 @@ const registrarTecnico = async (req, res) => {
   res.status(200).json({ msg: "Revisa tu correo para verificar tu cuenta" });
 };
 
-/*perfil de usuario */
-const perfil = async (req, res) => {
-  re;
+const perfilTecnico = (req, res) => {
+  delete req.tecnico.createdAt;
+  delete req.tecnico.updatedAt;
+  delete req.tecnico.__v;
+
+  res.status(200).json(req.tecnico);
 };
 
-export { login, registrarTecnico };
+const TicketporTecnico = async (req, res) => {
+  try {
+    const tickets = await Ticket.find({ tecnico: req.tecnico._id });
+    res.status(200).json({ tickets });
+  } catch (error) {
+    res.status(500).json({ msg: "Error" });
+  }
+};
+
+const ResponderTicket = async (req, res) => {
+  try {
+    const { respuesta } = req.body;
+    const ticket = await Ticket.findById(req.params.id);
+    if (!ticket) {
+      return res.status(404).json({ msg: "Ticket no encontrado" });
+    }
+    if (ticket.tecnico.toString() !== req.tecnico._id.toString()) {
+      return res.status(401).json({ msg: "No autorizado" });
+    }
+    ticket.respuesta = respuesta;
+    await ticket.save();
+    res.status(200).json({ msg: "Respuesta guardada" });
+  } catch (error) {
+    res.status(500).json({ msg: "Error" });
+  }
+};
+
+const cambiarestadoTicket = async (req, res) => {
+  try {
+    const { estado } = req.body;
+    const ticket = await Ticket.findById(req.params.id);
+    if (!ticket) {
+      return res.status(404).json({ msg: "Ticket no encontrado" });
+    }
+    if (ticket.tecnico.toString() !== req.tecnico._id.toString()) {
+      return res.status(401).json({ msg: "No autorizado" });
+    }
+    ticket.estado = estado;
+    await ticket.save();
+    res.status(200).json({ msg: "Respuesta guardada" });
+  } catch (error) {
+    res.status(500).json({ msg: "Error" });
+  }
+};
+
+export {
+  login,
+  registrarTecnico,
+  perfilTecnico,
+  TicketporTecnico,
+  ResponderTicket,
+  cambiarestadoTicket,
+};
