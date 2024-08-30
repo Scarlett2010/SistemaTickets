@@ -1,4 +1,5 @@
 import { Schema, model } from "mongoose";
+import bcrypt from "bcryptjs";
 
 const tecnicoSchema = new Schema({
   nombre: {
@@ -14,7 +15,7 @@ const tecnicoSchema = new Schema({
     required: true,
   },
   fecha_nacimiento: {
-    type: Date,
+    type: String,
     required: true,
   },
   genero: {
@@ -22,7 +23,7 @@ const tecnicoSchema = new Schema({
     required: true,
   },
   ciudad: {
-    type: Number,
+    type: String,
     required: true,
   },
   direccion: {

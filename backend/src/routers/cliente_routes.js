@@ -9,7 +9,7 @@ import {
   ResponderTicketCliente,
 } from "../controllers/cliente_controller.js";
 
-router.post("/login", loginCleinte);
+router.post("/loginCliente", loginCleinte);
 router.post("/registro", registrarCliente);
 router.get("/perfilCliente", perfilCliente);
 router.get("/ticketsporCliente", TicketporCliente);

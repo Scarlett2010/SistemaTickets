@@ -1,6 +1,6 @@
 import mongoose, { Schema, model } from "mongoose";
 
-const ticktSchema = new Shema({
+const ticktSchema = new Schema({
   codigo: {
     type: Number,
     required: true,

@@ -1,5 +1,10 @@
 import Tecnico from "../models/Tecnico.js";
 import Ticket from "../models/Ticket.js";
+import generarJWT from "../helpers/crearJWT.js";
+import mongoose from "mongoose";
+//import generarJWT from "../helpers/crearJWT.js";
+
+/*--------------------------------------------*/
 const login = async (req, res) => {
   const { email, password } = req.body;
 
@@ -8,7 +13,9 @@ const login = async (req, res) => {
       .status(404)
       .json({ msg: "Lo sentimos, debes llenar todos los campos" });
 
-  const tecnicoBDD = await Tecnico.findOne({ email }).select(" -token ");
+  const tecnicoBDD = await Tecnico.findOne({ email }).select(
+    "-status -__v -token -updatedAt -createdAt"
+  );
 
   if (tecnicoBDD?.confirmEmail === false)
     return res
@@ -27,7 +34,7 @@ const login = async (req, res) => {
       .status(404)
       .json({ msg: "Lo sentimos, el password no es el correcto" });
 
-  const token = generarJWT(tecnicoBDD._id, "veterinario");
+  const token = generarJWT(tecnicoBDD._id, "tecnico");
 
   const { nombre, apellido, direccion, telefono, _id } = tecnicoBDD;
 
@@ -42,6 +49,7 @@ const login = async (req, res) => {
     rol: "tecnico",
   });
 };
+/*------------------------------------------- */
 
 const registrarTecnico = async (req, res) => {
   const { email, password } = req.body;
@@ -49,27 +57,34 @@ const registrarTecnico = async (req, res) => {
     return res.status(400).json({
       msg: "Lo sentimos debe llenar todos los campos",
     });
-  const emailEncontrado = await Usuarios.findOne({ email });
+  const emailEncontrado = await Tecnico.findOne({ email });
   if (emailEncontrado)
     return res.status(400).json({
       msg: "Lo sentimos este email, ya se encuentra registrado",
     });
 
-  const nuevoUsuario = new Usuarios(req.body);
-  nuevoUsuario.password = await nuevoUsuario.encrypPassword(password);
+  const nuevoTecnico = new Tecnico(req.body);
+  nuevoTecnico.password = await nuevoTecnico.encrypPassword(password);
 
-  const token = nuevoUsuario.createToken();
-  //await enviarCorreoUsuario(email, token)
-  await nuevoUsuario.save();
+  const token = nuevoTecnico.crearToken();
+  await nuevoTecnico.save();
+  console.log(token);
+
   res.status(200).json({ msg: "Revisa tu correo para verificar tu cuenta" });
 };
 
 const perfilTecnico = (req, res) => {
-  delete req.tecnico.createdAt;
-  delete req.tecnico.updatedAt;
-  delete req.tecnico.__v;
+  delete req.tecnicoBDD.token;
+  delete req.tecnicoBDD.createdAt;
+  delete req.tecnicoBDD.updatedAt;
+  delete req.tecnicoBDD.__v;
+  res.status(200).json(req.tecnicoBDD);
+};
 
-  res.status(200).json(req.tecnico);
+const detalleTecnico = async (req, res) => {
+  const { id } = req.params;
+  const tecnicoBDD = await Tecnico.findById(id);
+  res.status(200).json(tecnicoBDD);
 };
 
 const TicketporTecnico = async (req, res) => {
@@ -121,6 +136,7 @@ export {
   login,
   registrarTecnico,
   perfilTecnico,
+  detalleTecnico,
   TicketporTecnico,
   ResponderTicket,
   cambiarestadoTicket,
