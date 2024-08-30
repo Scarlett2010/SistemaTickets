@@ -1,10 +1,11 @@
 "use client";
+import logoutService from "@/services/logout";
+import { useRouter } from "next/navigation";
 import {
   Menubar,
   MenubarContent,
   MenubarItem,
   MenubarMenu,
-  MenubarSeparator,
   MenubarTrigger,
 } from "@/components/ui/menubar";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
@@ -38,6 +39,12 @@ export default function DashboardLayout({
 }: {
   children: React.ReactNode;
 }) {
+  const router = useRouter();
+
+  const handleLogout = async () => {
+    await logoutService.logout();
+    router.push("/login");
+  };
   return (
     <>
       <nav className="bg-white border-b border-gray-200 fixed z-30 w-full ">
@@ -114,9 +121,10 @@ export default function DashboardLayout({
                     ))}
                     <SheetClose
                       asChild
+                      onClick={handleLogout}
                       className="w-full text-base text-center capitalize bg-red-500 text-white font-normal rounded-lg mt-20  p-2  hover:bg-red-600"
                     >
-                      <Link href="/login">cerrar sesion</Link>
+                      <span>cerrar sesion</span>
                     </SheetClose>
                   </SheetFooter>
                 </SheetContent>
@@ -162,10 +170,10 @@ export default function DashboardLayout({
                   </MenubarTrigger>
                   <MenubarContent>
                     <MenubarItem
-                      onClick={() => console.log("cerrar sesión")}
+                      onClick={handleLogout}
                       className="cursor-pointer text-red-400 focus:bg-red-500 focus:text-white"
                     >
-                      {<Link href="/login">cerrar sesion</Link>}
+                      cerrar sesion
                     </MenubarItem>
                   </MenubarContent>
                 </MenubarMenu>

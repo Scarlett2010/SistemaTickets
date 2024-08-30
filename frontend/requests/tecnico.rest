@@ -1,0 +1,29 @@
+POST http://localhost:3001/api/registroTecnico
+content-type: application/json
+
+{
+  "nombre": "Juan",
+  "apellido": "Pérez",
+  "cedula": 1234567890,
+  "fecha_nacimiento": "1990-01-01",
+  "genero": "Masculino",
+  "ciudad": "Bogotá",
+  "direccion": "Calle 123 #45-67",
+  "telefono": 3001234567,
+  "email": "juan.perez@ejemplo.com",
+  "password": "contraseña123",
+  "token": null,
+  "tickets": []
+}
+
+###
+POST http://localhost:3001/api/login
+content-type: application/json
+
+{
+  "email": "juan.perez@ejemplo.com",
+  "password": "contraseña123"
+}
+
+###
+GET http://localhost:3001/api/descripcionTecnico/66d1ef126e28f6814bbd5779
