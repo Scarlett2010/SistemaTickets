@@ -58,7 +58,7 @@ const cambiarEstado = async (req, res) => {
   if (!mongoose.Types.ObjectId.isValid(id)) {
     return res.status(404).json({ msg: `Lo sentimos, no existe ese ticket` });
   }
-  await Ticket.findByIdAndUpdate(id, { estado: false });
+  await Ticket.findByIdAndUpdate(id, { default: "pendiente" });
   res.status(200).json({ msg: "Estado del ticket modificado exitosamente" });
 };
 
