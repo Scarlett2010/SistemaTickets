@@ -22,11 +22,16 @@ import {
 import Link from "next/link";
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
-
+// Rutas técnico
 const links = [
   { name: "perfil", href: "/dashboard/tecnico/perfil" },
   { name: "tickets", href: "/dashboard/tecnico/tickets" },
 ];
+// Rutas usuario
+// const links = [
+//   { name: "Mis tickets", href: "/dashboard/usuario/tickets" },
+//   { name: "Mi perfil", href: "/dashboard/usuario/perfil" },
+// ];
 
 export default function DashboardLayout({
   children,

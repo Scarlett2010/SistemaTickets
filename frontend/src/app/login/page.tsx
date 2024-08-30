@@ -25,8 +25,12 @@ import {
 import Link from "next/link";
 
 const formSchema = z.object({
-  email: z.string().email("Invalid email address").min(2).max(50),
-  password: z.string().min(2, "Password must be at least 2 characters").max(50),
+  email: z
+    .string()
+    .email("Dirección de correo electrónico no válida")
+    .min(2)
+    .max(50),
+  password: z.string().min(6, "La contraseña debe tener al menos 6 caracteres"),
 });
 
 export default function LoginPage() {
