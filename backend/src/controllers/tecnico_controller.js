@@ -70,7 +70,7 @@ const registrarTecnico = async (req, res) => {
   await nuevoTecnico.save();
   console.log(token);
 
-  res.status(200).json({ msg: "Revisa tu correo para verificar tu cuenta" });
+  res.status(200).json({ msg: "Tecnico registrado" });
 };
 
 const perfilTecnico = (req, res) => {
