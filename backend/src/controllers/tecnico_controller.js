@@ -106,7 +106,10 @@ const ResponderTicket = async (req, res) => {
     if (ticket.tecnico.toString() !== req.tecnico._id.toString()) {
       return res.status(401).json({ msg: "No autorizado" });
     }
-    ticket.respuesta = respuesta;
+    ticket.respuesta.push({
+      text: respuesta.text,
+      tecnico: req.tecnico._id,
+    });
     await ticket.save();
     res.status(200).json({ msg: "Respuesta guardada" });
   } catch (error) {
