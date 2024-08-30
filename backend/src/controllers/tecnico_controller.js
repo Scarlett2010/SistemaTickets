@@ -70,7 +70,7 @@ const registrarTecnico = async (req, res) => {
   await nuevoTecnico.save();
   console.log(token);
 
-  res.status(200).json({ msg: "Revisa tu correo para verificar tu cuenta" });
+  res.status(200).json({ msg: "Tecnico registrado" });
 };
 
 const perfilTecnico = (req, res) => {
@@ -106,7 +106,10 @@ const ResponderTicket = async (req, res) => {
     if (ticket.tecnico.toString() !== req.tecnico._id.toString()) {
       return res.status(401).json({ msg: "No autorizado" });
     }
-    ticket.respuesta = respuesta;
+    ticket.respuesta.push({
+      text: respuesta.text,
+      tecnico: req.tecnico._id,
+    });
     await ticket.save();
     res.status(200).json({ msg: "Respuesta guardada" });
   } catch (error) {
