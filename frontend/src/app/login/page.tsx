@@ -1,10 +1,16 @@
 "use client";
+import React from "react";
+import { useRouter } from "next/navigation";
+import { setCookie } from "cookies-next";
+import loginService from "@/services/login";
+
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import Image from "next/image";
 
 import { Button } from "@/components/ui/button";
+import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import {
   Form,
   FormControl,
@@ -23,13 +29,21 @@ import {
   CardFooter,
 } from "@/components/ui/card";
 import Link from "next/link";
+import { ExclamationTriangleIcon } from "@radix-ui/react-icons";
 
 const formSchema = z.object({
-  email: z.string().email("Invalid email address").min(2).max(50),
-  password: z.string().min(2, "Password must be at least 2 characters").max(50),
+  email: z
+    .string()
+    .email("Dirección de correo electrónico no válida")
+    .min(2)
+    .max(50),
+  password: z.string().min(6, "La contraseña debe tener al menos 6 caracteres"),
 });
 
 export default function LoginPage() {
+  const [error, setError] = React.useState<string | null>(null);
+  const router = useRouter();
+
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -38,9 +52,46 @@ export default function LoginPage() {
     },
   });
 
-  function onSubmit(values: z.infer<typeof formSchema>) {
-    //TODO Hacer algo con los valores del formulario
-    console.log(values);
+  async function onSubmit(values: z.infer<typeof formSchema>) {
+    try {
+      const res = await loginService.login(values);
+console.log('%cfrontend\src\app\login\page.tsx:58 res', 'color: #26bfa5;', res);
+      if (res.token && res.rol) {
+        // Guardar el token como una cookie
+        setCookie("authToken", res.token, {
+          maxAge: 30 * 24 * 60 * 60, // 30 días
+          path: "/",
+          secure: process.env.NODE_ENV === "production",
+          sameSite: "strict",
+        });
+
+        // Guardar el rol del usuario
+        setCookie("userRole", res.rol, {
+          maxAge: 30 * 24 * 60 * 60,
+          path: "/",
+          secure: process.env.NODE_ENV === "production",
+          sameSite: "strict",
+        });
+
+        // Redirigir basado en el rol
+        if (res.rol === "usuario" || res.rol === "tecnico") {
+          router.push("/dashboard/usuario/home");
+          //TODO debemos cambiar el path de nav
+        } else {
+          router.push("/login");
+        }
+      } else {
+        throw new Error("No se recibió un token válido o rol de usuario");
+      }
+    } catch (err: any) {
+      setError(
+        err?.response?.data?.msg ||
+          "Ha ocurrido un error durante el inicio de sesión"
+      );
+      setTimeout(() => {
+        setError(null);
+      }, 3000);
+    }
   }
 
   return (
@@ -63,6 +114,13 @@ export default function LoginPage() {
             Introduzca su correo electrónico y contraseña para acceder a su
             cuenta
           </CardDescription>
+          {error && (
+            <Alert variant="destructive">
+              <ExclamationTriangleIcon className="h-4 w-4" />
+              <AlertTitle>Error</AlertTitle>
+              <AlertDescription>{error}</AlertDescription>
+            </Alert>
+          )}
         </CardHeader>
         <CardContent>
           <Form {...form}>
