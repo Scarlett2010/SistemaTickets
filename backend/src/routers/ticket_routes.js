@@ -7,9 +7,12 @@ import {
   actualizarTicket,
   eliminarTicket,
   cambiarEstado,
+  responderTicket,
 } from "../controllers/tickets_controller.js";
 
 router.post("/ticket/registro", registrarTicket);
+
+router.post("/ticketRespuesta/:id", responderTicket);
 
 router.get("/ticket/:id", detalleTicket);
 

@@ -1,5 +1,5 @@
 import Tecnico from "../models/Tecnico.js";
-import Ticket from "../models/Ticket.js";
+import tickets from "../models/Ticket.js";
 import generarJWT from "../helpers/crearJWT.js";
 import mongoose from "mongoose";
 //import generarJWT from "../helpers/crearJWT.js";
@@ -88,51 +88,8 @@ const detalleTecnico = async (req, res) => {
 };
 
 const TicketporTecnico = async (req, res) => {
-  try {
-    const tickets = await Ticket.find({ tecnico: req.tecnico._id });
-    res.status(200).json({ tickets });
-  } catch (error) {
-    res.status(500).json({ msg: "Error" });
-  }
-};
-
-const ResponderTicket = async (req, res) => {
-  try {
-    const { respuesta } = req.body;
-    const ticket = await Ticket.findById(req.params.id);
-    if (!ticket) {
-      return res.status(404).json({ msg: "Ticket no encontrado" });
-    }
-    if (ticket.tecnico.toString() !== req.tecnico._id.toString()) {
-      return res.status(401).json({ msg: "No autorizado" });
-    }
-    ticket.respuesta.push({
-      text: respuesta.text,
-      tecnico: req.tecnico._id,
-    });
-    await ticket.save();
-    res.status(200).json({ msg: "Respuesta guardada" });
-  } catch (error) {
-    res.status(500).json({ msg: "Error" });
-  }
-};
-
-const cambiarestadoTicket = async (req, res) => {
-  try {
-    const { estado } = req.body;
-    const ticket = await Ticket.findById(req.params.id);
-    if (!ticket) {
-      return res.status(404).json({ msg: "Ticket no encontrado" });
-    }
-    if (ticket.tecnico.toString() !== req.tecnico._id.toString()) {
-      return res.status(401).json({ msg: "No autorizado" });
-    }
-    ticket.estado = estado;
-    await ticket.save();
-    res.status(200).json({ msg: "Respuesta guardada" });
-  } catch (error) {
-    res.status(500).json({ msg: "Error" });
-  }
+  const ticket = await tickets.find();
+  res.status(200).json(ticket);
 };
 
 export {
@@ -141,6 +98,4 @@ export {
   perfilTecnico,
   detalleTecnico,
   TicketporTecnico,
-  ResponderTicket,
-  cambiarestadoTicket,
 };

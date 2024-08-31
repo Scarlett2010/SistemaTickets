@@ -6,8 +6,6 @@ import {
   registrarTecnico,
   //perfilTecnico,
   TicketporTecnico,
-  ResponderTicket,
-  cambiarestadoTicket,
   detalleTecnico,
 } from "../controllers/tecnico_controller.js";
 
@@ -16,7 +14,5 @@ router.post("/registroTecnico", registrarTecnico);
 //router.get("/perfilTecnico", perfilTecnico);
 router.get("/descripcionTecnico/:id", detalleTecnico);
 router.get("/ticketsporTecnico", TicketporTecnico);
-router.post("/respuestaTicket/:id", ResponderTicket);
-router.put("/cambiarEstadoTicket", cambiarestadoTicket);
 
 export default router;

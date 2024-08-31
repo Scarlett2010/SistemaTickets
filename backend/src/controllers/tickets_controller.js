@@ -26,6 +26,21 @@ const registrarTicket = async (req, res) => {
   res.status(200).json({ msg: "Ticket registrado" });
 };
 
+//responder tickets
+const responderTicket = async (req, res) => {
+  try {
+    const id = req.params.id;
+    const ticket = await Ticket.findById(id);
+    if (!ticket) {
+      return res.status(404).json({ msg: "Ticket no encontrado" });
+    }
+    await ticket.responder(req.body.respuesta);
+    res.status(200).json({ msg: "Respuesta guardada" });
+  } catch (error) {
+    res.status(500).json({ msg: "Error" });
+  }
+};
+
 // Actualizar un ticket existente
 const actualizarTicket = async (req, res) => {
   const { id } = req.params;
@@ -66,6 +81,7 @@ const cambiarEstado = async (req, res) => {
 export {
   detalleTicket,
   registrarTicket,
+  responderTicket,
   actualizarTicket,
   eliminarTicket,
   cambiarEstado,
