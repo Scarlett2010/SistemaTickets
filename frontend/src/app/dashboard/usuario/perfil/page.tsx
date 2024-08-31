@@ -1,8 +1,18 @@
 "use client";
 import PerfilTarget from "@/components/PerfilTarget";
 import { useAuth } from "@/context/AuthContext";
+import { useEffect } from "react";
 export default function Page() {
-  const { userData } = useAuth();
+  const { userData, renderUserData, setRenderUserData, isAuthenticated } =
+    useAuth();
+  useEffect(() => {
+    setRenderUserData(!renderUserData);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  if (!userData || !isAuthenticated)
+    return <div className="text-center text-3xl">Cargando...</div>;
+
   return (
     <>
       <PerfilTarget

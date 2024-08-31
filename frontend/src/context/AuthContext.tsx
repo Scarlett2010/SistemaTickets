@@ -21,7 +21,8 @@ export function AuthProvider({ children }: auth_provider_props) {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [userData, setUserData] = useState<user_data | null>(null);
   const [token, setToken] = useState<string | null>(null);
-  useEffect(() => {
+  const [renderUserData, setRenderUserData] = useState<boolean>(false);
+  const loadData = async () => {
     const savedToken = getCookie("authToken");
     const savedUserRole = getCookie("userRole");
 
@@ -56,7 +57,10 @@ export function AuthProvider({ children }: auth_provider_props) {
           });
       }
     }
-  }, []);
+  };
+  useEffect(() => {
+    loadData();
+  }, [renderUserData]);
 
   const router = useRouter();
   const login = async (user: auth_user): Promise<void> => {
@@ -109,6 +113,8 @@ export function AuthProvider({ children }: auth_provider_props) {
     logout,
     userData,
     token,
+    renderUserData,
+    setRenderUserData,
   };
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;

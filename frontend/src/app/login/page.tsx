@@ -68,7 +68,7 @@ export default function LoginPage() {
   }
 
   return (
-    <div className="w-full mx-auto min-h-screen flex flex-col items-center justify-center bg-[url('https://images.unsplash.com/photo-1556745753-b2904692b3cd?q=80&w=1973&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D')] bg-cover bg-center p-4">
+    <div className="w-full mx-auto min-h-screen flex flex-col items-center justify-center bg-gradient-to-r from-cyan-500 to-blue-500 p-4">
       <Card className="w-full max-w-md bg-black/60 backdrop-blur-sm text-white">
         <CardHeader className="space-y-1">
           <CardTitle className="text-2xl text-center font-bold">
