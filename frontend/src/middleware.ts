@@ -1,3 +1,4 @@
+import { match } from 'assert';
 import { NextResponse } from 'next/server';
 import type { NextRequest } from 'next/server';
 
@@ -11,7 +12,6 @@ export function middleware(request: NextRequest) {
             // Si no hay token, redirige al login
             return NextResponse.redirect(new URL('/login', request.url));
         }
-
         // Verifica el rol para las rutas específicas
         if (request.nextUrl.pathname.startsWith('/dashboard/usuario')&&userRole!=='usuario') {
             return NextResponse.redirect(new URL('/dashboard/home', request.url));
@@ -21,10 +21,18 @@ export function middleware(request: NextRequest) {
             return NextResponse.redirect(new URL('/dashboard/home', request.url));
         }
     }
+    if (request.nextUrl.pathname.startsWith('/login')) {
+        if (token&&(userRole==="tecnico"||userRole==="usuario")) {
+            return NextResponse.redirect(new URL('/dashboard/home', request.url));
+        } else {
+            return NextResponse.next();
+        }
+    }
 
     return NextResponse.next();
 }
 
 export const config={
-    matcher: '/dashboard/:path*',
+    // matcher: '/dashboard/:path*',
+    matcherOrder: ['/dashboard/:path*', '/login'],
 };

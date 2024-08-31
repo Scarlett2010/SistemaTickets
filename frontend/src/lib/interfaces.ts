@@ -47,6 +47,8 @@ export interface auth_context_type {
   logout: () => void;
   userData: user_data|null;
   token: string|null;
+  renderUserData: boolean;
+  setRenderUserData: (value: boolean) => void;
 }
 export interface auth_provider_props {
   children: ReactNode;

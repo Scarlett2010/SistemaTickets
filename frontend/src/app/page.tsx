@@ -41,9 +41,9 @@ const FeatureCard: React.FC<FeatureCardProps> = ({
 
 const Home: React.FC = () => {
   return (
-    <div className="min-h-screen bg-gradient-to-b from-gray-100 to-gray-200 flex flex-col items-center justify-center p-4">
+    <div className="min-h-screen bg-gradient-to-r from-purple-500 to-blue-500 flex flex-col items-center justify-center p-4">
       <main className="max-w-4xl w-full text-center">
-        <h1 className="text-4xl font-bold mb-6 text-gray-800">
+        <h1 className="text-4xl font-bold mb-6 text-white">
           Bienvenido a Ticket Plus
         </h1>
         <p className="text-xl mb-8 text-gray-600">
@@ -53,23 +53,26 @@ const Home: React.FC = () => {
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
           <FeatureCard
-            icon={<RocketIcon className="h-8 w-8 text-blue-500" />}
+            icon={<RocketIcon className="h-8 w-8 text-blue-500 " />}
             title="Fácil creación de billetes"
             description="Cree y gestione rápidamente tickets de soporte"
           />
           <FeatureCard
-            icon={<LockClosedIcon className="h-8 w-8 text-green-500" />}
+            icon={<LockClosedIcon className="h-8 w-8 text-green-500 " />}
             title="Acceso seguro"
             description="Conéctese de forma segura para acceder a sus entradas"
           />
           <FeatureCard
-            icon={<ClockIcon className="h-8 w-8 text-purple-500" />}
+            icon={<ClockIcon className="h-8 w-8 text-purple-500 " />}
             title="Actualizaciones en tiempo real"
             description="Obtenga actualizaciones instantáneas sobre el estado de su billete"
           />
         </div>
 
-        <Button size="lg" className="bg-blue-600 hover:bg-blue-700 text-white">
+        <Button
+          size="lg"
+          className="bg-orange-500 hover:bg-orange-600 text-white"
+        >
           <Link href="/login" className="flex items-center hover:underline">
             Acceder a su cuenta
             <ArrowRightIcon className="ml-2 h-4 w-4" />
@@ -77,7 +80,7 @@ const Home: React.FC = () => {
         </Button>
       </main>
 
-      <footer className="mt-16 text-gray-600">
+      <footer className="mt-16 text-white">
         © {new Date().getFullYear()} Ticket Plus. Todos los derechos reservados.
       </footer>
     </div>
