@@ -1,7 +1,7 @@
 "use client";
+import { useAuth } from "@/context/AuthContext";
 import React from "react";
-import { useRouter } from "next/navigation";
-import { setCookie } from "cookies-next";
+
 import loginService from "@/services/login";
 
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -30,6 +30,7 @@ import {
 } from "@/components/ui/card";
 import Link from "next/link";
 import { ExclamationTriangleIcon } from "@radix-ui/react-icons";
+import { auth_user } from "@/lib/interfaces";
 
 const formSchema = z.object({
   email: z
@@ -42,7 +43,7 @@ const formSchema = z.object({
 
 export default function LoginPage() {
   const [error, setError] = React.useState<string | null>(null);
-  const router = useRouter();
+  const { login } = useAuth();
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -51,38 +52,10 @@ export default function LoginPage() {
       password: "",
     },
   });
-
   async function onSubmit(values: z.infer<typeof formSchema>) {
     try {
-      const res = await loginService.login(values);
-console.log('%cfrontend\src\app\login\page.tsx:58 res', 'color: #26bfa5;', res);
-      if (res.token && res.rol) {
-        // Guardar el token como una cookie
-        setCookie("authToken", res.token, {
-          maxAge: 30 * 24 * 60 * 60, // 30 días
-          path: "/",
-          secure: process.env.NODE_ENV === "production",
-          sameSite: "strict",
-        });
-
-        // Guardar el rol del usuario
-        setCookie("userRole", res.rol, {
-          maxAge: 30 * 24 * 60 * 60,
-          path: "/",
-          secure: process.env.NODE_ENV === "production",
-          sameSite: "strict",
-        });
-
-        // Redirigir basado en el rol
-        if (res.rol === "usuario" || res.rol === "tecnico") {
-          router.push("/dashboard/usuario/home");
-          //TODO debemos cambiar el path de nav
-        } else {
-          router.push("/login");
-        }
-      } else {
-        throw new Error("No se recibió un token válido o rol de usuario");
-      }
+      const res: auth_user = await loginService.login(values);
+      login(res);
     } catch (err: any) {
       setError(
         err?.response?.data?.msg ||
@@ -90,7 +63,7 @@ console.log('%cfrontend\src\app\login\page.tsx:58 res', 'color: #26bfa5;', res);
       );
       setTimeout(() => {
         setError(null);
-      }, 3000);
+      }, 5000);
     }
   }
 

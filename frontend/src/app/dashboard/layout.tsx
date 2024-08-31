@@ -1,6 +1,7 @@
 "use client";
+import { useAuth } from "@/context/AuthContext";
 import logoutService from "@/services/logout";
-import { useRouter } from "next/navigation";
+
 import {
   Menubar,
   MenubarContent,
@@ -39,11 +40,11 @@ export default function DashboardLayout({
 }: {
   children: React.ReactNode;
 }) {
-  const router = useRouter();
+  const { logout } = useAuth();
 
   const handleLogout = async () => {
     await logoutService.logout();
-    router.push("/login");
+    logout();
   };
   return (
     <>
