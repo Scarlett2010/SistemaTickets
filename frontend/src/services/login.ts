@@ -1,14 +1,21 @@
 import axios, { AxiosResponse } from "axios";
 import { signin, auth_user } from "@/lib/interfaces";
 
-const baseUrl="http://localhost:3001/api/login";
-
-
 const login=async (newObject: signin): Promise<auth_user> => {
-    const request: Promise<AxiosResponse<auth_user>>=axios.post(baseUrl, newObject);
-    const res=await request;
-    return res.data;
-};
+    console.log(newObject.rol);
+
+    if (newObject.rol==="tecnico") {
+        const request: Promise<AxiosResponse<auth_user>>=axios.post("http://localhost:3001/api/login", newObject)
+        const res=await request;
+        return res.data;
+    }
+    if (newObject.rol==="cliente") {
+        const request: Promise<AxiosResponse<auth_user>>=axios.post("http://localhost:3001/api/loginCliente", newObject)
+        const res=await request;
+        return res.data;
+    }
+    throw new Error(`Invalid rol value: ${rol}`);
+}
 
 
 // eslint-disable-next-line import/no-anonymous-default-export

@@ -39,6 +39,7 @@ const formSchema = z.object({
     .min(2)
     .max(50),
   password: z.string().min(6, "La contraseña debe tener al menos 6 caracteres"),
+  rol: z.enum(["tecnico", "cliente"], "Seleccione un rol"),
 });
 
 export default function LoginPage() {
@@ -50,11 +51,14 @@ export default function LoginPage() {
     defaultValues: {
       email: "",
       password: "",
+      rol: "cliente",
     },
   });
+
   async function onSubmit(values: z.infer<typeof formSchema>) {
     try {
       const res: auth_user = await loginService.login(values);
+      console.log("res", res);
       login(res);
     } catch (err: any) {
       setError(
@@ -84,8 +88,8 @@ export default function LoginPage() {
             Iniciar sesión
           </CardTitle>
           <CardDescription className="text-center text-gray-300">
-            Introduzca su correo electrónico y contraseña para acceder a su
-            cuenta
+            Introduzca su correo electrónico, contraseña y seleccione su rol
+            para acceder a su cuenta
           </CardDescription>
           {error && (
             <Alert variant="destructive">
@@ -100,10 +104,29 @@ export default function LoginPage() {
             <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
               <FormField
                 control={form.control}
+                name="rol"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Rol</FormLabel>
+                    <FormControl>
+                      <select
+                        {...field}
+                        className="text-black bg-white rounded px-3 py-2"
+                      >
+                        <option value="tecnico">Técnico</option>
+                        <option value="cliente">Cliente</option>
+                      </select>
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
                 name="email"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Correo electrónico </FormLabel>
+                    <FormLabel>Correo electrónico</FormLabel>
                     <FormControl>
                       <Input
                         placeholder="correo@example.com"
@@ -135,7 +158,7 @@ export default function LoginPage() {
                 )}
               />
               <Button type="submit" className="w-full">
-                Log in
+                Iniciar sesión
               </Button>
             </form>
           </Form>

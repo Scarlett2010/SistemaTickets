@@ -1,0 +1,35 @@
+###? registro de cliente
+POST http://localhost:3001/api/registro
+content-type: application/json
+
+ {
+  "cedula": 1722554489,
+  "nombre": "David",
+  "apellido": "Vela",
+  "ciudad": "Guayaquil",
+  "email": "david@gmail.com",
+  "password": "david123",
+  "direccion": "Urdesa",
+  "telefono": 987755445,
+  "fecha_nacimiento": "1985-09-20",
+  "dependencia": "Empleado"
+}
+###? login de cliente
+POST http://localhost:3001/api/loginCliente
+content-type: application/json
+
+{
+  "email": "david@gmail.com",
+  "password": "david123"
+}
+
+### {
+###   "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2ZDM3M2JkY2FhMjMzNGI4ZTQyOTQ0OSIsInJvbCI6InRlY25pY28iLCJpYXQiOjE3MjUxMzc0OTksImV4cCI6MTcyNTIyMzg5OX0.Y1JoXBAl-B4J8-gCRoHVSNwDngD4hSJiMF4sZuMh7hA",
+###   "nombre": "David",
+###   "apellido": "Vela",
+###   "direccion": "Urdesa",
+###   "telefono": 987755445,
+###   "_id": "66d373bdcaa2334b8e429449",
+###   "email": "david@gmail.com",
+###   "rol": "cliente"
+### }

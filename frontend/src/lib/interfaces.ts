@@ -4,6 +4,7 @@ import {
 
 //? ***** Services
 export interface signin {
+  rol: string;
   email: string;
   password: string;
 }
@@ -49,6 +50,8 @@ export interface auth_context_type {
   token: string|null;
   renderUserData: boolean;
   setRenderUserData: (value: boolean) => void;
+  id: string|null;
+  rol: string|null;
 }
 export interface auth_provider_props {
   children: ReactNode;
@@ -82,4 +85,10 @@ export interface perfil_target {
   direccion?: string;
   telefono?: number;
   email?: string
+}
+
+//? ***** Anothers
+export interface nav_links {
+  name: string;
+  href: string;
 }

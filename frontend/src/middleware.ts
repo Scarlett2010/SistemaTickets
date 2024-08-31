@@ -13,7 +13,7 @@ export function middleware(request: NextRequest) {
             return NextResponse.redirect(new URL('/login', request.url));
         }
         // Verifica el rol para las rutas específicas
-        if (request.nextUrl.pathname.startsWith('/dashboard/usuario')&&userRole!=='usuario') {
+        if (request.nextUrl.pathname.startsWith('/dashboard/cliente')&&userRole!=='cliente') {
             return NextResponse.redirect(new URL('/dashboard/home', request.url));
         }
 
@@ -22,7 +22,7 @@ export function middleware(request: NextRequest) {
         }
     }
     if (request.nextUrl.pathname.startsWith('/login')) {
-        if (token&&(userRole==="tecnico"||userRole==="usuario")) {
+        if (token&&(userRole==="tecnico"||userRole==="cliente")) {
             return NextResponse.redirect(new URL('/dashboard/home', request.url));
         } else {
             return NextResponse.next();
