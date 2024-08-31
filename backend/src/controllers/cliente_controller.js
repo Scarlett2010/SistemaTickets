@@ -92,23 +92,23 @@ const TicketporCliente = async (req, res) => {
   }
 };
 
-const ResponderTicketCliente = async (req, res) => {
-  try {
-    const { respuesta } = req.body;
-    const ticket = await Ticket.findById(req.params.id);
-    if (!ticket) {
-      return res.status(404).json({ msg: "Ticket no encontrado" });
-    }
-    if (ticket.cliente.toString() !== req.cliente._id.toString()) {
-      return res.status(401).json({ msg: "No autorizado" });
-    }
-    ticket.respuesta = respuesta;
-    await ticket.save();
-    res.status(200).json({ msg: "Respuesta guardada" });
-  } catch (error) {
-    res.status(500).json({ msg: "Error" });
-  }
-};
+// const ResponderTicketCliente = async (req, res) => {
+//   try {
+//     const { respuesta } = req.body;
+//     const ticket = await Ticket.findById(req.params.id);
+//     if (!ticket) {
+//       return res.status(404).json({ msg: "Ticket no encontrado" });
+//     }
+//     if (ticket.cliente.toString() !== req.cliente._id.toString()) {
+//       return res.status(401).json({ msg: "No autorizado" });
+//     }
+//     ticket.respuesta = respuesta;
+//     await ticket.save();
+//     res.status(200).json({ msg: "Respuesta guardada" });
+//   } catch (error) {
+//     res.status(500).json({ msg: "Error" });
+//   }
+// };
 
 export {
   loginCleinte,

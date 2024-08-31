@@ -26,7 +26,7 @@ const ticktsSchema = new Schema({
   },
   respuesta: {
     type: String,
-    required: true,
+    required: false,
   },
   tecnico: {
     type: mongoose.Schema.Types.ObjectId,
@@ -34,8 +34,9 @@ const ticktsSchema = new Schema({
   },
 });
 
-ticktsSchema.methods.responder =async function (respuesta) {
+ticktsSchema.methods.responder = async function (respuesta) {
   this.respuesta = respuesta;
   this.save();
-}
+};
+
 export default model("Tickets", ticktsSchema);
