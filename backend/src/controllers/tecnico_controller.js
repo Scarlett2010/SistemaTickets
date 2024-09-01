@@ -91,7 +91,7 @@ const TicketporTecnico = async (req, res) => {
   try {
     const { id } = req.params;
     const tickets = await Ticket.find({ tecnico: id }).select(
-      "id descripcion cliente estado"
+      "id descripcion cliente tecnico estado"
     );
     res.status(200).json({ tickets });
   } catch (error) {

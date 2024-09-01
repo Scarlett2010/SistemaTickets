@@ -1,7 +1,7 @@
 import { Schema, model } from "mongoose";
 import bcrypt from "bcryptjs";
 
-const tecnicosSchema = new Schema({
+const tecnicoSchema = new Schema({
   nombre: {
     type: String,
     required: true,
@@ -54,19 +54,19 @@ const tecnicosSchema = new Schema({
   ],
 });
 
-tecnicosSchema.methods.encrypPassword = async function (password) {
+tecnicoSchema.methods.encrypPassword = async function (password) {
   const salt = await bcrypt.genSalt(10);
   const passwordEncryp = await bcrypt.hash(password, salt);
   return passwordEncryp;
 };
 
-tecnicosSchema.methods.matchPassword = async function (password) {
+tecnicoSchema.methods.matchPassword = async function (password) {
   const response = await bcrypt.compare(password, this.password);
   return response;
 };
-tecnicosSchema.methods.crearToken = function () {
+tecnicoSchema.methods.crearToken = function () {
   const tokenGenerado = (this.token = Math.random().toString(36).slice(2));
   return tokenGenerado;
 };
 
-export default model("Tecnicos", tecnicosSchema);
+export default model("Tecnico", tecnicoSchema);

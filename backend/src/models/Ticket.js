@@ -1,6 +1,6 @@
 import mongoose, { Schema, model } from "mongoose";
 
-const ticktsSchema = new Schema({
+const ticketsSchema = new Schema({
   descripcion: {
     type: String,
     required: true,
@@ -23,15 +23,11 @@ const ticktsSchema = new Schema({
     type: String,
     default: null,
   },
-  tecnico: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: "Tecnico",
-  },
 });
 
-ticktsSchema.methods.responder = async function (respuesta) {
+ticketsSchema.methods.responder = async function (respuesta) {
   this.respuesta = respuesta;
   this.save();
 };
 
-export default model("Tickets", ticktsSchema);
+export default model("Tickets", ticketsSchema);
