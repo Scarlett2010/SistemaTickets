@@ -1,5 +1,8 @@
 "use client";
 import { useAuth } from "@/context/AuthContext";
+import { useState } from "react";
+
+import { nav_links } from "@/lib/interfaces";
 import logoutService from "@/services/logout";
 
 import {
@@ -24,24 +27,28 @@ import {
 import Link from "next/link";
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
-// Rutas técnico
-const links = [
-  { name: "perfil", href: "/dashboard/tecnico/perfil" },
-  { name: "tickets", href: "/dashboard/tecnico/tickets" },
-];
-// Rutas usuario
-// const links = [
-//   { name: "Mis tickets", href: "/dashboard/usuario/tickets" },
-//   { name: "Mi perfil", href: "/dashboard/usuario/perfil" },
-// ];
 
 export default function DashboardLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
-  const { logout } = useAuth();
+  const { logout, rol } = useAuth();
+  console.log(rol);
+  var links: nav_links[] = [];
 
+  if (rol === "tecnico") {
+    links = [
+      { name: "perfil", href: "/dashboard/tecnico/perfil" },
+      { name: "tickets", href: "/dashboard/tecnico/tickets" },
+    ];
+  }
+  if (rol === "cliente") {
+    links = [
+      { name: "Mis tickets", href: "/dashboard/usuario/tickets" },
+      { name: "Mi perfil", href: "/dashboard/usuario/perfil" },
+    ];
+  }
   const handleLogout = async () => {
     await logoutService.logout();
     logout();
