@@ -13,6 +13,6 @@ router.post("/login", login);
 router.post("/registroTecnico", registrarTecnico);
 //router.get("/perfilTecnico", perfilTecnico);
 router.get("/descripcionTecnico/:id", detalleTecnico);
-router.get("/ticketsporTecnico", TicketporTecnico);
+router.get("/ticketsporTecnico/:id", TicketporTecnico);
 
 export default router;

@@ -10,15 +10,9 @@ const detalleTicket = async (req, res) => {
 
 // Registrar un nuevo ticket
 const registrarTicket = async (req, res) => {
-  const { codigo, tecnico, descripcion } = req.body;
   if (Object.values(req.body).includes(""))
     return res.status(400).json({
       msg: "Lo sentimos debe llenar todos los campos",
-    });
-  const codigoEncontrado = await Ticket.findOne({ codigo });
-  if (codigoEncontrado)
-    return res.status(400).json({
-      msg: "Lo sentimos este ticket, ya se encuentra registrado",
     });
 
   const nuevoTicket = new Ticket(req.body);

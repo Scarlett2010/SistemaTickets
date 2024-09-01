@@ -1,5 +1,5 @@
 import Tecnico from "../models/Tecnico.js";
-import tickets from "../models/Ticket.js";
+import Ticket from "../models/Ticket.js";
 import generarJWT from "../helpers/crearJWT.js";
 import mongoose from "mongoose";
 //import generarJWT from "../helpers/crearJWT.js";
@@ -88,8 +88,15 @@ const detalleTecnico = async (req, res) => {
 };
 
 const TicketporTecnico = async (req, res) => {
-  const ticket = await tickets.find();
-  res.status(200).json(ticket);
+  try {
+    const { id } = req.params;
+    const tickets = await Ticket.find({ tecnico: id }).select(
+      "id descripcion cliente estado"
+    );
+    res.status(200).json({ tickets });
+  } catch (error) {
+    res.status(500).json({ msg: "Error" });
+  }
 };
 
 export {

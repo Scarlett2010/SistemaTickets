@@ -1,5 +1,6 @@
 import Cliente from "../models/Clientes.js";
 import Ticket from "../models/Ticket.js";
+import tecnicos from "../models/Tecnico.js";
 import generarJWT from "../helpers/crearJWT.js";
 import mongoose from "mongoose";
 const loginCleinte = async (req, res) => {
@@ -85,29 +86,17 @@ const detalleCliente = async (req, res) => {
 
 const TicketporCliente = async (req, res) => {
   try {
-    const tickets = await Ticket.find({ cliente: req.cliente._id });
+    const { id } = req.params;
+    const tickets = await Ticket.find({ cliente: id }).select("id descripcion tecnico estado");
     res.status(200).json({ tickets });
   } catch (error) {
     res.status(500).json({ msg: "Error" });
   }
 };
 
-const ResponderTicketCliente = async (req, res) => {
-  try {
-    const { respuesta } = req.body;
-    const ticket = await Ticket.findById(req.params.id);
-    if (!ticket) {
-      return res.status(404).json({ msg: "Ticket no encontrado" });
-    }
-    if (ticket.cliente.toString() !== req.cliente._id.toString()) {
-      return res.status(401).json({ msg: "No autorizado" });
-    }
-    ticket.respuesta = respuesta;
-    await ticket.save();
-    res.status(200).json({ msg: "Respuesta guardada" });
-  } catch (error) {
-    res.status(500).json({ msg: "Error" });
-  }
+const listarTecnico = async (req, res) => {
+  const tecnico = await tecnicos.find().select("nombre email genero");
+  res.status(200).json(tecnico);
 };
 
 export {
@@ -116,5 +105,5 @@ export {
   perfilCliente,
   detalleCliente,
   TicketporCliente,
-  ResponderTicketCliente,
+  listarTecnico,
 };

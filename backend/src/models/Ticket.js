@@ -1,11 +1,6 @@
 import mongoose, { Schema, model } from "mongoose";
 
 const ticktsSchema = new Schema({
-  codigo: {
-    type: Number,
-    required: true,
-    trim: true,
-  },
   descripcion: {
     type: String,
     required: true,
@@ -26,7 +21,7 @@ const ticktsSchema = new Schema({
   },
   respuesta: {
     type: String,
-    required: false,
+    default: null,
   },
   tecnico: {
     type: mongoose.Schema.Types.ObjectId,

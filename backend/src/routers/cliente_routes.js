@@ -6,13 +6,13 @@ import {
   registrarCliente,
   detalleCliente,
   TicketporCliente,
-  ResponderTicketCliente,
+  listarTecnico,
 } from "../controllers/cliente_controller.js";
 
 router.post("/loginCliente", loginCleinte);
 router.post("/registro", registrarCliente);
 router.get("/descripcionCliente/:id", detalleCliente);
-router.get("/ticketsporCliente", TicketporCliente);
-router.post("/RespuestaTicketCliente", ResponderTicketCliente);
+router.get("/ticketsporCliente/:id", TicketporCliente);
+router.get("/listarTecnicos", listarTecnico);
 
 export default router;
