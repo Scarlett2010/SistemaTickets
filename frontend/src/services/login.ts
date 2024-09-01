@@ -14,7 +14,7 @@ const login=async (newObject: signin): Promise<auth_user> => {
         const res=await request;
         return res.data;
     }
-    throw new Error(`Invalid rol value: ${rol}`);
+    throw new Error(`Invalid rol value: ${newObject.rol}`);
 }
 
 

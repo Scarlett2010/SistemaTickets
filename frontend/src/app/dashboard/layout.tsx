@@ -34,7 +34,6 @@ export default function DashboardLayout({
   children: React.ReactNode;
 }) {
   const { logout, rol } = useAuth();
-  console.log(rol);
   var links: nav_links[] = [];
 
   if (rol === "tecnico") {
@@ -45,7 +44,7 @@ export default function DashboardLayout({
   }
   if (rol === "cliente") {
     links = [
-      { name: "Mis tickets", href: "/dashboard/usuario/tickets" },
+      { name: "gestión de tickets", href: "/dashboard/usuario/tickets" },
       { name: "Mi perfil", href: "/dashboard/usuario/perfil" },
     ];
   }
@@ -110,8 +109,7 @@ export default function DashboardLayout({
                         </div>
                       }
                       <SheetDescription className="text-center">
-                        Hola, {""}
-                        <span className="font-bold">David</span>
+                        {rol}
                       </SheetDescription>
                     </SheetTitle>
                   </SheetHeader>
@@ -170,11 +168,12 @@ export default function DashboardLayout({
               {/* User Avatar */}
               <Menubar>
                 <MenubarMenu>
-                  <MenubarTrigger>
+                  <MenubarTrigger className="flex items-center flex-col ">
                     <Avatar className="bg-background cursor-pointer  hidden sm:flex">
                       <AvatarImage src="https://github.com/shadcn.png" />
                       <AvatarFallback>DV</AvatarFallback>
                     </Avatar>
+                    <div className="hidden sm:flex text-slate-500">{rol}</div>
                   </MenubarTrigger>
                   <MenubarContent>
                     <MenubarItem
