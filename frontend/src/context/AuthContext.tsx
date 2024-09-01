@@ -91,7 +91,7 @@ export function AuthProvider({ children }: auth_provider_props) {
         });
         
         // Redirigir basado en el rol
-        if (user.rol === "usuario" || user.rol === "tecnico") {
+        if (user.rol === "cliente" || user.rol === "tecnico") {
           setToken(user.token);
           setRol(user.rol);
           setId(user._id);

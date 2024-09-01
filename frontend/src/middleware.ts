@@ -3,8 +3,10 @@ import { NextResponse } from 'next/server';
 import type { NextRequest } from 'next/server';
 
 export function middleware(request: NextRequest) {
+    console.log("Middleware is running");
     const token=request.cookies.get('authToken')?.value;
     const userRole=request.cookies.get('userRole')?.value;
+    console.log("token,userRole", token, userRole);
 
     // Comprueba si la ruta actual está en /dashboard
     if (request.nextUrl.pathname.startsWith('/dashboard')) {
@@ -13,7 +15,7 @@ export function middleware(request: NextRequest) {
             return NextResponse.redirect(new URL('/login', request.url));
         }
         // Verifica el rol para las rutas específicas
-        if (request.nextUrl.pathname.startsWith('/dashboard/cliente')&&userRole!=='cliente') {
+        if (request.nextUrl.pathname.startsWith('/dashboard/usuario')&&userRole!=='cliente') {
             return NextResponse.redirect(new URL('/dashboard/home', request.url));
         }
 
@@ -22,17 +24,20 @@ export function middleware(request: NextRequest) {
         }
     }
     if (request.nextUrl.pathname.startsWith('/login')) {
-        if (token&&(userRole==="tecnico"||userRole==="cliente")) {
+        console.log("token,userRole", token, userRole);
+        if (token&&userRole==="tecnico") {
+            return NextResponse.redirect(new URL('/dashboard/home', request.url));
+        } else if (token&&userRole==="cliente") {
             return NextResponse.redirect(new URL('/dashboard/home', request.url));
         } else {
             return NextResponse.next();
         }
+
     }
 
     return NextResponse.next();
 }
 
 export const config={
-    // matcher: '/dashboard/:path*',
-    matcherOrder: ['/dashboard/:path*', '/login'],
+    matcher: '/:path*',
 };
