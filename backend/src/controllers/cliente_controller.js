@@ -87,7 +87,7 @@ const detalleCliente = async (req, res) => {
 const TicketporCliente = async (req, res) => {
   try {
     const { id } = req.params;
-    const tickets = await Ticket.find({ cliente: id }).select("id descripcion tecnico estado");
+    const tickets = await Ticket.find({ cliente: id }).select("id descripcion cliente tecnico estado");
     res.status(200).json({ tickets });
   } catch (error) {
     res.status(500).json({ msg: "Error" });
