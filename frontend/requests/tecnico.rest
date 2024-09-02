@@ -1,17 +1,34 @@
+@NEXT_PUBLIC_API_BASE={{$dotenv NEXT_PUBLIC_API_BASE}}
+###todo|  tecnico puede ver sus tickets:
+GET {{NEXT_PUBLIC_API_BASE}}/ticketsporTecnico/66d411494deb5f20bc732cf9
+
+###   {
+###     "tickets": [
+###       {
+###         "_id": "66d40f28d6c24ac2d232b852",
+###         "descripcion": "tiket de Scarlett a Pepe 1",
+###         "tecnico": "66d381bbe1105cd285a8ab72",
+###         "cliente": "66d3fffa96affc9038360e00",
+###         "estado": "Pendiente"
+###       },
+###       ...
+###     ]
+###   }
+
 ###todo|  Registrar técnico
-POST http://localhost:3001/api/registroTecnico
+POST {{NEXT_PUBLIC_API_BASE}}/registroTecnico
 content-type: application/json
 
 {
-  "nombre": "Pepe",
-  "apellido": "Martinez",
-  "cedula": 1234567891,
+  "nombre": "Melany",
+  "apellido": "Polo",
+  "cedula": 124567891,
   "fecha_nacimiento": "1991-01-01",
-  "genero": "Masculino",
+  "genero": "Femenino",
   "ciudad": "Quito",
   "direccion": "Calle 13 #45-67",
   "telefono": 3001234007,
-  "email": "pepe@ejemplo.com",
+  "email": "melany@ejemplo.com",
   "password": "contraseña123",
   "token": null,
   "tickets": []
@@ -22,12 +39,12 @@ content-type: application/json
 ###   }
 
 
-###todo!|  Login del técnico
-POST http://localhost:3001/api/login
+###todo|  Login del técnico
+POST {{NEXT_PUBLIC_API_BASE}}/login
 content-type: application/json
 
 {
-  "email": "juan.perez@ejemplo.com",
+  "email": "melany@ejemplo.com",
   "password": "contraseña123"
 }
 ###   {
@@ -42,7 +59,7 @@ content-type: application/json
 ###   }
 
 ###todo|  obtener un técnico en específico
-GET http://localhost:3001/api/descripcionTecnico/66d1ef126e28f6814bbd5779
+GET {{NEXT_PUBLIC_API_BASE}}/descripcionTecnico/66d411494deb5f20bc732cf9
 ###   {
 ###     "_id": "66d1ef126e28f6814bbd5779",
 ###     "nombre": "Juan",
@@ -59,21 +76,3 @@ GET http://localhost:3001/api/descripcionTecnico/66d1ef126e28f6814bbd5779
 ###     "tickets": [],
 ###     "__v": 0
 ###   }
-
-###todo|  obtener los tickets del técnico
-GET http://localhost:3001/api/ticketsporTecnico
-
-###   [
-###     {
-###       "_id": "66d37b8ee1105cd285a8ab57",
-###       "codigo": 12347,
-###       "descripcion": "ticket abierto",
-###       "cliente": "66d373bdcaa2334b8e429449",
-###       "estado": "Pendiente",
-###       "respuesta": "estimado, su respuesta al ticket 1",
-###       "__v": 0
-###     },
-###     {
-###      ...
-###     },
-###   ]

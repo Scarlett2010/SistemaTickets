@@ -48,9 +48,7 @@ function TicketCard({
           </div>
         </CardContent>
         <CardFooter className="flex items-center justify-between">
-          <div className="text-xs text-muted-foreground">
-            Creado hace {creationDate} días
-          </div>
+          <div className="text-xs text-muted-foreground">{creationDate}</div>
         </CardFooter>
       </Card>
     </div>

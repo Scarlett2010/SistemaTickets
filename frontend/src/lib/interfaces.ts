@@ -8,6 +8,28 @@ export interface signin {
   email: string;
   password: string;
 }
+export interface ticket {
+  cliente: _id,
+  descripcion: string,
+  estado: string
+  tecnico: _id,
+  _id: _id
+}
+export interface ticket_update {
+  descripcion: string,
+}
+
+export interface _id {
+  id: string,
+}
+export interface tecnico {
+  _id: _id,
+  nombre: string,
+  genero: string,
+  email: string,
+}
+
+
 
 //? ***** AuthContext
 export interface auth_user {
@@ -16,7 +38,7 @@ export interface auth_user {
   apellido: string;
   direccion: string;
   telefono: number;
-  _id: string;
+  _id: _id;
   email: string;
   rol: string;
 }
@@ -39,7 +61,7 @@ export interface user_data {
 export interface decoded_token {
   iat: number;
   exp: number;
-  id: string;
+  id: _id;
   rol: string;
 }
 export interface auth_context_type {
@@ -50,7 +72,7 @@ export interface auth_context_type {
   token: string|null;
   renderUserData: boolean;
   setRenderUserData: (value: boolean) => void;
-  id: string|null;
+  id: _id|null;
   rol: string|null;
 }
 export interface auth_provider_props {
