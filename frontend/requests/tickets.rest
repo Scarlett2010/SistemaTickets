@@ -1,14 +1,26 @@
-# usuario: david - técnico: juan
+@NEXT_PUBLIC_API_BASE={{$dotenv NEXT_PUBLIC_API_BASE}}
 
-###?  cliente registra un tícket:
-POST http://localhost:3001/api/ticket/registro
+###todo|  cliente puede ver todos los técnicos ✅
+GET {{NEXT_PUBLIC_API_BASE}}/listarTecnicos
+
+###   [
+###     {
+###       "_id": "66d1ef126e28f6814bbd5779",
+###       "nombre": "Juan",
+###       "genero": "Masculino",
+###       "email": "juan.perez@ejemplo.com"
+###     },
+###     ...
+###   ]
+
+###? cliente registra un tícket: ✅
+POST {{NEXT_PUBLIC_API_BASE}}/ticket/registro
 content-type: application/json
 
 {
-  "codigo":12349,
-  "descripcion": "ticket abierto 1",
-  "técnico": "66d1ef126e28f6814bbd5779",
-  "cliente": "66d373bdcaa2334b8e429449",
+  "descripcion": "tiket de Scarlett a Juan 3",
+  "tecnico": "66d411494deb5f20bc732cf9",
+  "cliente": "66d411d84deb5f20bc732cff",
   "respuesta": " "
 }
 ###   {
@@ -16,22 +28,22 @@ content-type: application/json
 ###   }
 
 ###todo|  técnico responde el tiket de un usuario (id del ticket):
-POST http://localhost:3001/api/ticketRespuesta/66d37b8ee1105cd285a8ab57
+POST {{NEXT_PUBLIC_API_BASE}}/ticketRespuesta/66d412284deb5f20bc732d04
 content-type: application/json
 
 {
-  "respuesta": "estimado, su respuesta al ticket 1"
+  "respuesta": "Holaaaaaaaaaaaa"
 }
+### RESPONSE OK:
 ###    {
 ###      "msg": "Respuesta guardada"
 ###    }
 
-###? detalle del ticket individual (id del ticket):
-GET http://localhost:3001/api/ticket/66d37b8ee1105cd285a8ab57
+###? (AMBOS) detalle del ticket individual (id del ticket):
+GET {{NEXT_PUBLIC_API_BASE}}/ticket/66d412284deb5f20bc732d04
 
 ###   {
-###     "_id": "66d37b8ee1105cd285a8ab57",
-###     "codigo": 12347,
+###     "_id": "66d4012996affc9038360e07",
 ###     "descripcion": "ticket abierto",
 ###     "cliente": "66d373bdcaa2334b8e429449",
 ###     "estado": "Pendiente",
@@ -39,9 +51,33 @@ GET http://localhost:3001/api/ticket/66d37b8ee1105cd285a8ab57
 ###     "__v": 0
 ###   }
 
-###?  cliente actualiza ticket 
-put http://localhost:3001/api/actualizarTicket/66d37b8ee1105cd285a8ab57
+###?  cliente actualiza ticket id:ticket
+PUT {{NEXT_PUBLIC_API_BASE}}/actualizarTicket/66d412284deb5f20bc732d04
+content-type: application/json
+
+{
+  "descripcion": "tiket de Pepe Narvaez a Melany Polo 2"
+}
+
+###   {
+###     "msg": "Actualización exitosa del ticket"
+###   }
+
 ###?  cliente elimina ticket 
-put http://localhost:3001/api/eliminarTicket/66d37b8ee1105cd285a8ab57
-###todo|  técnico actualiza ticket 
-put http://localhost:3001/api/estadoTicket/66d37b8ee1105cd285a8ab57
+DELETE {{NEXT_PUBLIC_API_BASE}}/eliminarTicket/66d40fc9e1620a55dc87af2b
+
+###   {
+###     "msg": "Ticket eliminado exitosamente"
+###   }
+
+###todo|  técnico cambia el estado del ticket
+POST {{NEXT_PUBLIC_API_BASE}}/estadoTicket/66d412284deb5f20bc732d04
+content-type: application/json
+
+{
+  "estado":"Finalizado"
+}
+
+###  {
+###    "msg": "Estado del ticket modificado exitosamente"
+###  }

@@ -10,7 +10,9 @@ export default function Page() {
         name="David Vela"
         creationDate="2022-01-01"
         UserMessage="lorem ipsum dolor sit amet consectetur adipiscing elit"
-      />
+      >
+        técnico responde el ticket de un usuario
+      </TicketCardDialog>
     </div>
   );
 }

@@ -1,4 +1,5 @@
 "use client";
+import React, { ReactNode } from "react";
 import TicketCard from "@/components/TicketCard";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import {
@@ -11,7 +12,10 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { ticket_card_dialog } from "@/lib/interfaces";
-import CommentBox from "./CommentBox";
+
+interface TicketCardDialogProps extends ticket_card_dialog {
+  children?: ReactNode;
+}
 
 function TicketCardDialog({
   title,
@@ -20,7 +24,8 @@ function TicketCardDialog({
   name,
   creationDate,
   UserMessage,
-}: ticket_card_dialog) {
+  children,
+}: TicketCardDialogProps) {
   return (
     <Dialog>
       <div className="relative">
@@ -51,18 +56,15 @@ function TicketCardDialog({
             </div>
             <br />
             {UserMessage}
-            <div className="pt-10">
-              <CommentBox />
-            </div>
+            <div className="pt-10">{children}</div>
           </DialogHeader>
           <DialogFooter className="text-sm">
-            <DialogClose onClick={() => console.log("finalizar")}>
-              finalizar ticket
-            </DialogClose>
+            <DialogClose onClick={() => console.log("finalizar")}></DialogClose>
           </DialogFooter>
         </DialogContent>
       </div>
     </Dialog>
   );
 }
+
 export default TicketCardDialog;

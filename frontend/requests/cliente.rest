@@ -1,25 +1,44 @@
-###? registro de cliente
-POST http://localhost:3001/api/registro
+@NEXT_PUBLIC_API_BASE={{$dotenv NEXT_PUBLIC_API_BASE}}
+
+###?!  cliente puede ver sus tickets - traer nombre del técnico ✅
+GET {{NEXT_PUBLIC_API_BASE}}/ticketsporCliente/66d3fffa96affc9038360e00
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2ZDU0NWUwZGU5NjExMWRmMTMxNTFiZSIsInJvbCI6ImNsaWVudGUiLCJpYXQiOjE3MjUyNTMwOTYsImV4cCI6MTcyNTMzOTQ5Nn0.i4bTvxnyTBvUfN_uHSSDyUIHC6L41BWpOT23l9QkIDk
+
+###   {
+###     "tickets": [
+###       {
+###         "_id": "66d40f28d6c24ac2d232b852",
+###         "descripcion": "tiket de Scarlett a Pepe 1",
+###         "tecnico": "66d381bbe1105cd285a8ab72",
+###         "cliente": "66d3fffa96affc9038360e00",
+###         "estado": "Pendiente"
+###       },
+###       ...
+###     ]
+###   }
+
+###? registro de cliente 📌
+POST {{NEXT_PUBLIC_API_BASE}}/registro
 content-type: application/json
 
  {
   "cedula": 1722554489,
-  "nombre": "David",
-  "apellido": "Vela",
-  "ciudad": "Guayaquil",
-  "email": "david@gmail.com",
+  "nombre": "Johan",
+  "apellido": "Narvaez",
+  "ciudad": "Quito",
+  "email": "johan@gmail.com",
   "password": "david123",
   "direccion": "Urdesa",
   "telefono": 987755445,
   "fecha_nacimiento": "1985-09-20",
   "dependencia": "Empleado"
 }
-###? login de cliente
-POST http://localhost:3001/api/loginCliente
+###? login de cliente ✅
+POST {{NEXT_PUBLIC_API_BASE}}/loginCliente
 content-type: application/json
 
 {
-  "email": "david@gmail.com",
+  "email": "johan@gmail.com",
   "password": "david123"
 }
 
@@ -33,3 +52,24 @@ content-type: application/json
 ###   "email": "david@gmail.com",
 ###   "rol": "cliente"
 ### }
+
+###? perfil del cliente ✅
+GET {{NEXT_PUBLIC_API_BASE}}/descripcionCliente/66d411d84deb5f20bc732cff
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2ZDU0NWUwZGU5NjExMWRmMTMxNTFiZSIsInJvbCI6ImNsaWVudGUiLCJpYXQiOjE3MjUyNTMwOTYsImV4cCI6MTcyNTMzOTQ5Nn0.i4bTvxnyTBvUfN_uHSSDyUIHC6L41BWpOT23l9QkIDk
+
+###   {
+###     "_id": "66d373bdcaa2334b8e429449",
+###     "cedula": 1722554489,
+###     "nombre": "David",
+###     "apellido": "Vela",
+###     "ciudad": "Guayaquil",
+###     "email": "david@gmail.com",
+###     "password": "$2a$10$qFOz9n3yNQF0KMaCenSHrO8O673j/IQ.JCltks1d.s4UHtEawDaWy",
+###     "direccion": "Urdesa",
+###     "telefono": 987755445,
+###     "fecha_nacimiento": "1985-09-20T00:00:00.000Z",
+###     "dependencia": "Empleado",
+###     "tickets": [],
+###     "token": "wgwqnvia55o",
+###     "__v": 0
+###   }
