@@ -2,7 +2,6 @@
 import jwt from "jsonwebtoken";
 import Tecnico from "../models/Tecnico.js";
 import Cliente from "../models/Clientes.js";
-import tickets from "../models/Ticket.js";
 
 // Método para proteger rutas
 const verificarAutenticacion = async (req, res, next) => {
@@ -34,7 +33,6 @@ const verificarAutenticacion = async (req, res, next) => {
     } else if (rol === "cliente") {
       req.clienteBDD = await Cliente.findById(id).lean().select("-password");
       req.clienteBDD.rol = "cliente";
-      const tickets = await getTicketsByClienteId(id);
       req.tickets = tickets;
     }
     console.log(req.clienteBDD);

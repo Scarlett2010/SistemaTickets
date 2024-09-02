@@ -9,17 +9,18 @@ import {
   cambiarEstado,
   responderTicket,
 } from "../controllers/tickets_controller.js";
+import verificarAutenticacion from "../middlewares/autenticacion.js";
 
-router.post("/ticket/registro", registrarTicket);
+router.post("/ticket/registro", verificarAutenticacion, registrarTicket);
 
-router.post("/ticketRespuesta/:id", responderTicket);
+router.post("/ticketRespuesta/:id", verificarAutenticacion, responderTicket);
 
-router.get("/ticket/:id", detalleTicket);
+router.get("/ticket/:id", verificarAutenticacion, detalleTicket);
 
-router.put("/actualizarTicket/:id", actualizarTicket);
+router.put("/actualizarTicket/:id", verificarAutenticacion, actualizarTicket);
 
-router.delete("/eliminarTicket/:id", eliminarTicket);
+router.delete("/eliminarTicket/:id", verificarAutenticacion, eliminarTicket);
 
-router.post("/estadoTicket/:id", cambiarEstado);
+router.post("/estadoTicket/:id", verificarAutenticacion, cambiarEstado);
 
 export default router;
